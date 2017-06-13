@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/security
+
+server:
+  port: 9191
+  contextPath: /uaa
+
+security.sessions: if_required
+#security.oauth2.client.clientId: acme
+#security.oauth2.client.clientSecret: acmesecret
+#security.oauth2.client.authorized-grant-types: authorization_code,refresh_token,password
+#security.oauth2.client.scope: openid
+
+
+security:
+  user:
+    password: password
+    name: user
+  ignored: /css/**,/js/**,/favicon.ico,/webjars/**
+logging:
+  level:
+    org.springframework.security: DEBUG
