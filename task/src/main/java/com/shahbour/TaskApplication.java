@@ -16,7 +16,6 @@ import java.util.List;
 @EnableDiscoveryClient(autoRegister = false)
 @EnableFeignClients
 @SpringBootApplication
-@EnableOAuth2Client
 @Slf4j
 public class TaskApplication implements CommandLineRunner {
 
@@ -29,8 +28,8 @@ public class TaskApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		List<Customer> customers = resourceClient.getCustomers();
+		Customer customer = resourceClient.getCustomer(1);
 
-		log.info("found {} customer",customers.size());
+		log.info("found {} customer",customer.getName());
 	}
 }

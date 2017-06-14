@@ -3,7 +3,10 @@ server:
 security:
   oauth2:
     client:
-#      client-id: task
+      client-id: task
       client-secret: taskpassword
       access-token-uri: http://localhost:9191/uaa/oauth/token
       grant-type: client_credentials
+logging:
+  level:
+    org.springframework.security: debug
