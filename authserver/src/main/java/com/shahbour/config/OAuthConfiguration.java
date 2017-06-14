@@ -14,11 +14,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import javax.sql.DataSource;
 import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,10 +34,12 @@ import java.util.Map;
 public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
+    private final DataSource dataSource;
 
     @Autowired
-    public OAuthConfiguration(AuthenticationManager authenticationManager) {
+    public OAuthConfiguration(AuthenticationManager authenticationManager,DataSource dataSource) {
         this.authenticationManager = authenticationManager;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -44,13 +50,24 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
         return converter;
     }
 
+    @Bean
+    public JdbcTokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+    @Bean
+    protected AuthorizationCodeServices authorizationCodeServices() {
+        return new JdbcAuthorizationCodeServices(dataSource);
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("acme")
-                .authorizedGrantTypes("authorization_code", "refresh_token", "password")
-                .scopes("openid")
-                .secret("acmesecret")
+
+        clients.jdbc(dataSource);
+//        clients.inMemory()
+//                .withClient("acme")
+//                .authorizedGrantTypes("authorization_code", "refresh_token", "password")
+//                .scopes("openid")
+//                .secret("acmesecret")
         //        .autoApprove(true)
         ;
 
@@ -60,21 +77,14 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         //final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         //tokenEnhancerChain.setTokenEnhancers(Lists.newArrayList(new CustomTokenEnhancer() ));
-        endpoints.authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter());// .tokenEnhancer(tokenEnhancerChain);//
+        endpoints
+                //.userDetailsService(userDetailService)
+                .authenticationManager(authenticationManager)
+                .authorizationCodeServices(authorizationCodeServices())
+                .tokenStore(tokenStore())
+                .accessTokenConverter(jwtAccessTokenConverter()) // .tokenEnhancer(tokenEnhancerChain);//
+                .approvalStoreDisabled();
     }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
-    }
 }
 
-//class CustomTokenEnhancer implements TokenEnhancer {
-//    @Override
-//    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-//        final Map<String, Object> additionalInfo = new HashMap<>();
-//        additionalInfo.put("organization", authentication.getName() + "1231232");
-//        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-//        return accessToken;
-//    }
-//}

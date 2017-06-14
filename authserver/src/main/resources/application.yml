@@ -1,7 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/security
-
+   url: jdbc:h2:tcp://localhost/~/security
 server:
   port: 9191
   contextPath: /uaa
