@@ -37,6 +37,7 @@
         <module>authserver</module>
         <module>eureka-service</module>
         <module>gateway</module>
+        <module>resource-service</module>
         <module>ui</module>
     </modules>
 
