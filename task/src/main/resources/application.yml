@@ -1,0 +1,9 @@
+server:
+  port: 0
+security:
+  oauth2:
+    client:
+#      client-id: task
+      client-secret: taskpassword
+      access-token-uri: http://localhost:9191/uaa/oauth/token
+      grant-type: client_credentials
