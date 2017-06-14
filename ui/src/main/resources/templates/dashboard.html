@@ -1,0 +1,12 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<h1>Dashboard</h1>
+<img th:src="@{/images/logo.png}" />
+<form method="post" th:action="@{/logout}">
+    <button type="submit">logout</button>
+</form>
+</body>
+</html>
