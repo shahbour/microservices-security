@@ -31,5 +31,9 @@ public class TaskApplication implements CommandLineRunner {
 		Customer customer = resourceClient.getCustomer(1);
 
 		log.info("found {} customer",customer.getName());
+
+		customer = resourceClient.getCustomer(2);
+
+		log.info("found {} customer",customer.getName());
 	}
 }
