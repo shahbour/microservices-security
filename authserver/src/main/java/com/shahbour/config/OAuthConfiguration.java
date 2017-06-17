@@ -82,7 +82,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
                 .authenticationManager(authenticationManager)
                 .authorizationCodeServices(authorizationCodeServices())
                 .tokenStore(tokenStore())
-                .accessTokenConverter(jwtAccessTokenConverter()) // .tokenEnhancer(tokenEnhancerChain);//
+     //           .accessTokenConverter(jwtAccessTokenConverter()) // .tokenEnhancer(tokenEnhancerChain);//
                 .approvalStoreDisabled();
     }
 

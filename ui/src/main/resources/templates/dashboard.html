@@ -5,8 +5,20 @@
 <body>
 <h1>Dashboard</h1>
 <img th:src="@{/images/logo.png}" />
+<div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    This content is only shown to users.
+</div>
 <form method="post" th:action="@{/logout}">
     <button type="submit">logout</button>
+</form>
+<form method="post" th:action="@{/dashboard}">
+    <button type="submit">Dashboard</button>
 </form>
 </body>
 </html>
