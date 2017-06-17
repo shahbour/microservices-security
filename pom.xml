@@ -39,6 +39,7 @@
         <module>gateway</module>
         <module>resource-service</module>
         <module>ui</module>
+        <module>task</module>
     </modules>
 
     <build>
