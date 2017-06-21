@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Interceptor implements RequestInterceptor {
 
-    private final OAuth2RestTemplate template;
+    private final OAuth2RestTemplate oauth2RestTemplate;
 
-    public Interceptor(ClientCredentialsResourceDetails oauth2RemoteResource) {
-      template = new OAuth2RestTemplate(oauth2RemoteResource, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
+    public Interceptor(OAuth2RestTemplate oauth2RestTemplate) {
+        this.oauth2RestTemplate = oauth2RestTemplate;
     }
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        requestTemplate.header("Authorization", "bearer " + template.getAccessToken().getValue());
+        requestTemplate.header("Authorization", "bearer " + oauth2RestTemplate.getAccessToken().getValue());
     }
 }
