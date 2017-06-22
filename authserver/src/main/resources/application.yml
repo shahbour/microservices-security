@@ -13,9 +13,9 @@ security.sessions: if_required
 
 
 security:
-  user:
-    password: password
-    name: user
+#  user:
+#    password: password
+#    name: user
   ignored: /css/**,/js/**,/favicon.ico,/webjars/**
 logging:
   level:
