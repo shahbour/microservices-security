@@ -1,4 +1,6 @@
 security:
+  basic:
+    enabled: false
   oauth2:
     client:
       accessTokenUri: http://localhost:9191/uaa/oauth/token
@@ -7,7 +9,6 @@ security:
       clientSecret: acmesecret
     resource:
       user-info-uri: http://localhost:9191/uaa/user
-      prefer-token-info: false
 #      jwt:
 #        keyValue: |
 #          -----BEGIN PUBLIC KEY-----

@@ -30,7 +30,7 @@ public class CustomPrincipal implements PrincipalExtractor {
             user.setUsername(userDetail.get("username").toString());
             user.setDn(userDetail.get("dn").toString());
             user.setIpPhone(userDetail.get("ipPhone").toString());
-            user.setPhoto(userDetail.get("photo").toString());
+//            user.setPhoto(userDetail.get("photo").toString());
             return user;
         } else {
             for (String key : PRINCIPAL_KEYS) {
