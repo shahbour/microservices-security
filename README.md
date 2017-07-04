@@ -1,2 +1,2 @@
 # microservices-security
-![Diagram](/Cloud Security Diagram.png)
+![Diagram](/Cloud%20Security%20Diagram.png)
