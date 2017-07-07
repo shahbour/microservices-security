@@ -3,8 +3,8 @@ security:
     enabled: false
   oauth2:
     client:
-      accessTokenUri: http://localhost:9191/uaa/oauth/token
-      userAuthorizationUri: http://localhost:9191/uaa/oauth/authorize
+      accessTokenUri: http://localhost:8080/uaa/oauth/token
+      userAuthorizationUri: http://localhost:8080/uaa/oauth/authorize
       clientId: acme
       clientSecret: acmesecret
     resource:
@@ -17,7 +17,10 @@ security:
 zuul:
   ignored-services: '*'
   routes:
-    authserver: /uaa/**
+    authserver:
+      sensitiveHeaders:
+      path: /uaa/**
+      stripPrefix: false
     resource-service: /resource/**
     ui:
       path: /ui/**

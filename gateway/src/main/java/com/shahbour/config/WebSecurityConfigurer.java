@@ -36,6 +36,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 //.exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
                 //.and()
                 .authorizeRequests()
+                .antMatchers("/uaa/**", "/login").permitAll()
                 .anyRequest().authenticated();
 
     }
